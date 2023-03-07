@@ -109,3 +109,8 @@ input[type="submit"]:hover {
 #query-url:hover {
   text-decoration: underline;
 }
+
+#loadmsg {
+  font-style: italic;
+  margin-top: 10px;
+}

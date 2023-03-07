@@ -192,10 +192,28 @@ function mapEvents() {
     'classic': L.icon({iconUrl: './images/event.png'})
   }
 
+  // show message while loading
+  const loadingMsg = document.createElement('div');
+  loadingMsg.id = 'loadmsg'
+  loadingMsg.innerHTML = 'Loading data, please wait...';
+  parentEl = document.getElementsByClassName("container");
+  parentEl[0].appendChild(loadingMsg);
+
+  function flashLoadingMessage() {
+    if (loadingMsg.innerHTML === "Loading data, please wait...") {
+      loadingMsg.innerHTML = "Loading data, please wait";
+    } else {
+      loadingMsg.innerHTML += ".";
+    }
+  }
+
+  setInterval(flashLoadingMessage, 500);
+
   // fetch events
   fetch(fetchUrl)
   .then(response => response.text())
   .then(data => {
+    loadingMsg.remove(); // delete loading message
     for (l of data.split('\n').slice(1)) {
       if (l) {
         let fields = l.split('|')
