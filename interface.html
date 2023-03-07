@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stations Map</title>
+  <link rel="stylesheet" type="text/css" href="./css/builder.css">
+  <script type="text/javascript" src="./js/query.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+  <script type="text/javascript">
+    window.onload = fdsnwsInitQueryForm;
+  </script>
+</head>
+<body>
+  <h1>FDSNWS Events - Builder with Map</h1>
+  <form id="query-form" action="query" method="GET">
+    <fieldset>
+      <legend>Time constraints</legend>
+      <table class="builder">
+        <tbody>
+          <tr>
+            <td>Start Time</td>
+            <td><input type="date" maxlength="15" name="starttime" value="" /></td>
+          </tr>
+          <tr>
+            <td>End Time</td>
+            <td><input type="date" maxlength="15" name="endtime" value="" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>Geographic constraints</legend>
+      <input type="radio" id="loc-none" name="location" value=""><label for="loc-none">None</label><br>
+      <input type="radio" id="loc-bbox" name="location" value=""><label for="loc-bbox">Bounding Box</label><br>
+      <input type="radio" id="loc-circle" name="location" value=""><label for="loc-circle">Circle</label><br>
+      <table class="builder" id="loc-bbox-input">
+        <tbody>
+          <tr>
+            <td>Minimum Latitude</td>
+            <td><input type="number" name="minlatitude" min="-90" max="90" step="1" value="" placeholder="-90.0" /></td>
+          </tr>
+          <tr>
+            <td>Maximum Latitude</td>
+            <td><input type="number" name="maxlatitude" min="-90" max="90" step="1" value="" placeholder="90.0" /></td>
+          </tr>
+          <tr>
+            <td>Minimum Longitude</td>
+            <td><input type="number" name="minlongitude" min="-180" max="180" step="1" value="" placeholder="-180.0" /></td>
+          </tr>
+          <tr>
+            <td>Maximum Longitude</td>
+            <td><input type="number" name="maxlongitude" min="-180" max="180" step="1" value="" placeholder="180.0" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="builder" id="loc-circle-input">
+        <tbody>
+          <tr>
+            <td>Latitude</td>
+            <td><input type="number" name="latitude" min="-90" max="90" step="1" value="" placeholder="0.0" /></td>
+          </tr>
+          <tr>
+            <td>Longitude</td>
+            <td><input type="number" name="longitude" min="-180" max="180" step="1" value="" placeholder="0.0" /></td>
+          </tr>
+          <tr>
+            <td>Minimum Radius</td>
+            <td><input type="number" name="minradius" min="0" max="180" step="1" value="" placeholder="0.0" /></td>
+          </tr>
+          <tr>
+            <td>Maximum Radius</td>
+            <td><input type="number" name="maxradius" min="0" max="180" step="1" value="" placeholder="180" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>Service specific constraints</legend>
+      <table class="builder">
+        <tbody>
+          <tr>
+            <td>Minimum Depth (km)</td>
+            <td><input type="number" name="mindepth" min="-10" value="" placeholder="0.0" /></td>
+          </tr>
+          <tr>
+            <td>Maximum Depth (km)</td>
+            <td><input type="number" name="maxdepth" min="-10" value="" placeholder="300.0" /></td>
+          </tr>
+          <tr>
+            <td>Minimum Magnitude</td>
+            <td><input type="number" name="minmagnitude" min="-1" max="12" step="0.1" value="" placeholder="2.0" /></td>
+          </tr>
+          <tr>
+            <td>Maximum Magnitude</td>
+            <td><input type="number" name="maxmagnitude" min="-1" max="12" step="0.1" value="" placeholder="5.0" /></td>
+          </tr>
+          <tr>
+            <td>Magnitude Type</td>
+            <td><input type="text" size="10" maxlength="10" name="magnitudetype" value="" placeholder="M" /></td>
+          </tr>
+          <tr>
+            <td>Event Type</td>
+            <td><input type="text" size="16" name="eventtype" value="" placeholder="earthquake,unknown" /></td>
+          </tr>
+          <tr>
+            <td>All Origins</td>
+            <td><input type="checkbox" name="includeallorigins" value="true" /></td>
+          </tr>
+          <tr>
+            <td>All Magnitudes</td>
+            <td><input type="checkbox" name="includeallmagnitudes" value="true" /></td>
+          </tr>
+          <tr>
+            <td>Arrivals</td>
+            <td><input type="checkbox" name="includearrivals" value="true" /></td>
+          </tr>
+          <tr title="Note: Picks are available only in combination with includearrivals=true">
+            <td>Exclude Picks</td>
+            <td><input type="checkbox" name="includepicks" value="false" /></td>
+          </tr>
+          <tr title="Include Preferred Focal Mechanism and Momenttensor Solution">
+            <td>Focal Mechanism</td>
+            <td><input type="checkbox" name="includefocalmechanism" value="true" /></td>
+          </tr>
+          <tr title="Include All Focal Mechanism and Momenttensor Solutions">
+            <td>All Focal Mechanisms</td>
+            <td><input type="checkbox" name="includeallfocalmechanisms" value="true" /></td>
+          </tr>
+          <tr title="Include Moment Tensor Station Contributions">
+            <td>MT Station Contributions</td>
+            <td><input type="checkbox" name="includestationmts" value="true" /></td>
+          </tr>
+          <tr>
+            <td>Include Comments</td>
+            <td><input type="checkbox" name="includecomments" value="true" /></td>
+          </tr>
+          <tr>
+            <td>Event ID</td>
+            <td><input type="text" size="10" name="eventid" value="" /></td>
+          </tr>
+          <tr>
+            <td>Limit</td>
+            <td><input type="number" name="limit" min="1" step="1" value="" placeholder="20" /></td>
+          </tr>
+          <tr>
+            <td>Offset</td>
+            <td><input type="number" name="offset" min="1" step="1" value="" placeholder="1" /></td>
+          </tr>
+          <tr>
+            <td>Order By</td>
+            <td>
+              <select name="orderby">
+                <option value="">Time descending (default)</option>
+                <option value="time-asc">Time ascending</option>
+                <option value="magnitude">Magnitude descending</option>
+                <option value="magnitude-asc">Magnitude ascending</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Catalog</td>
+            <td><input type="text" size="10" name="catalog" value="" disabled="disabled" /></td>
+          </tr>
+          <tr>
+            <td>Contributor</td>
+            <td><input type="text" size="10" name="contributor" value="" placeholder="agency" /></td>
+          </tr>
+          <tr>
+            <td>Update After</td>
+            <td><input type="date" maxlength="15" name="updateafter" value="" disabled="disabled"/></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>Output control</legend>
+      <table class="builder">
+        <tbody>
+          <tr>
+            <td>Format</td>
+            <td>
+              <select name="format">
+                <option value="">QuakeML (default)</option>
+                <option value="qml-rt">QuakeML-RT</option>
+                <option value="sc3ml">SeisComP XML</option>
+                <option value="text">Text (| delimited)</option>
+                <option value="csv">CSV (, delimited)</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Formatted</td>
+            <td><input type="checkbox" name="formatted" value="true" /></td>
+          </tr>
+          <tr>
+            <td>No Data 404</td>
+            <td><input type="checkbox" name="nodata" value="404" checked="checked" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+
+    <p><button type="button" id="map-button" onclick="mapEvents()">Map Events</button></p>
+  </form>
+
+  <div class="container">
+    <div id="map"></div>
+    <div><a id="query-url" href=""></a></div>
+  </div>
+
+  <script>
+    var map = L.map('map').setView([38, 26], 6);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
+  </script>
+</body>
+</html>

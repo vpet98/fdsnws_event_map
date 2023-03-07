@@ -1,0 +1,111 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  font-size: 25px;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+fieldset > legend {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  height: 5px;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 5px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #444;
+}
+
+#query-form {
+  width: 35%;
+  float: left;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 7px;
+  margin-right: 1%;
+  margin-bottom: 20px;
+}
+
+#query-form fieldset {
+  width: 90%;
+  display: table-cell;
+  vertical-align: top;
+}
+
+#map-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  border-radius: 7px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  width: 59%;
+  float: right;
+  margin-right: 0.1%;
+}
+
+#map {
+  height: 84vh;
+  border-radius: 7px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+#query-url {
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+#query-url:hover {
+  text-decoration: underline;
+}
