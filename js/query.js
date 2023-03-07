@@ -189,6 +189,26 @@ function mapEvents() {
 
   // get map icons
   var icons = {
+    'smVShal': L.icon({iconUrl: './images/small_veryshallow.png'}),
+    'smShal': L.icon({iconUrl: './images/small_shallow.png'}),
+    'smDeep': L.icon({iconUrl: './images/small_deep.png'}),
+    'smVDeep': L.icon({iconUrl: './images/small_verydeep.png'}),
+    'smDeepest': L.icon({iconUrl: './images/small_deepest.png'}),
+    'avVShal': L.icon({iconUrl: './images/average_veryshallow.png'}),
+    'avShal': L.icon({iconUrl: './images/average_shallow.png'}),
+    'avDeep': L.icon({iconUrl: './images/average_deep.png'}),
+    'avVDeep': L.icon({iconUrl: './images/average_verydeep.png'}),
+    'avDeepest': L.icon({iconUrl: './images/average_deepest.png'}),
+    'bigVShal': L.icon({iconUrl: './images/big_veryshallow.png'}),
+    'bigShal': L.icon({iconUrl: './images/big_shallow.png'}),
+    'bigDeep': L.icon({iconUrl: './images/big_deep.png'}),
+    'bigVDeep': L.icon({iconUrl: './images/big_verydeep.png'}),
+    'bigDeepest': L.icon({iconUrl: './images/big_deepest.png'}),
+    'crVShal': L.icon({iconUrl: './images/crucial_veryshallow.png'}),
+    'crShal': L.icon({iconUrl: './images/crucial_shallow.png'}),
+    'crDeep': L.icon({iconUrl: './images/crucial_deep.png'}),
+    'crVDeep': L.icon({iconUrl: './images/crucial_verydeep.png'}),
+    'crDeepest': L.icon({iconUrl: './images/crucial_deepest.png'}),
     'classic': L.icon({iconUrl: './images/event.png'})
   }
 
@@ -217,7 +237,70 @@ function mapEvents() {
     for (l of data.split('\n').slice(1)) {
       if (l) {
         let fields = l.split('|')
-        let marker = L.marker([fields[2], fields[3]], {icon: icons['classic']}).addTo(map);
+        let marker;
+        if (fields[4] < 15 && fields[10] < 2.5) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['smVShal']}).addTo(map);
+        }
+        else if (fields[4] >= 15 && fields[4] < 30 && fields[10] < 2.5) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['smShal']}).addTo(map);
+        }
+        else if (fields[4] >= 30 && fields[4] < 60 && fields[10] < 2.5) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['smDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 60 && fields[4] < 100 && fields[10] < 2.5) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['smVDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 100 && fields[10] < 2.5) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['smDeepest']}).addTo(map);
+        }
+        else if (fields[4] < 15 && fields[10] >= 2.5 && fields[10] < 4.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['avVShal']}).addTo(map);
+        }
+        else if (fields[4] >= 15 && fields[4] < 30 && fields[10] >= 2.5 && fields[10] < 4.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['avShal']}).addTo(map);
+        }
+        else if (fields[4] >= 30 && fields[4] < 60 && fields[10] >= 2.5 && fields[10] < 4.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['avDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 60 && fields[4] < 100 && fields[10] >= 2.5 && fields[10] < 4.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['avVDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 100 && fields[10] >= 2.5 && fields[10] < 4.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['avDeepest']}).addTo(map);
+        }
+        else if (fields[4] < 15 && fields[10] >= 4.0 && fields[10] < 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['bigVShal']}).addTo(map);
+        }
+        else if (fields[4] >= 15 && fields[4] < 30 && fields[10] >= 4.0 && fields[10] < 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['bigShal']}).addTo(map);
+        }
+        else if (fields[4] >= 30 && fields[4] < 60 && fields[10] >= 4.0 && fields[10] < 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['bigDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 60 && fields[4] < 100 && fields[10] >= 4.0 && fields[10] < 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['bigVDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 100 && fields[10] >= 4.0 && fields[10] < 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['bigDeepest']}).addTo(map);
+        }
+        else if (fields[4] < 15 && fields[10] >= 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['crVShal']}).addTo(map);
+        }
+        else if (fields[4] >= 15 && fields[4] < 30 && fields[10] >= 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['crShal']}).addTo(map);
+        }
+        else if (fields[4] >= 30 && fields[4] < 60 && fields[10] >= 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['crDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 60 && fields[4] < 100 && fields[10] >= 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['crVDeep']}).addTo(map);
+        }
+        else if (fields[4] >= 100 && fields[10] >= 4.0 && fields[10] >= 5.0) {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['crDeepest']}).addTo(map);
+        }
+        else {
+          marker = L.marker([fields[2], fields[3]], {icon: icons['classic']}).addTo(map);
+        }
         marker.bindPopup(`Time: ${fields[1].replace('T', ' ').replace(/\.(\d{2}).*$/, '.$1')}<br>
           Depth (km): ${parseFloat(fields[4]).toFixed(2)}<br>Magnitude: ${parseFloat(fields[10]).toFixed(2)}`);
       }
