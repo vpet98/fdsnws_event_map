@@ -153,6 +153,22 @@ function fdsnwsInitQueryForm() {
 
 	toggleLocation();
   updateQueryURL();
+
+  // default time to 00:00 if user does not select any
+  const myDateTimes = document.querySelectorAll("input[type=datetime-local]");
+  myDateTimes.forEach(function(dateTime) {
+    dateTime.addEventListener("input", function() {
+      const currentValue = dateTime.value;
+      const currentDate = new Date(currentValue);
+      const currentHour = currentDate.getHours();
+      const currentMinute = currentDate.getMinutes();
+      if (currentHour === new Date().getHours() && currentMinute === new Date().getMinutes()) {
+       const newValue = currentValue.split("T")[0] + "T00:00";
+       dateTime.value = newValue;
+      }
+    });
+  });
+
 }
 
 function mapEvents() {
