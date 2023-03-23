@@ -317,8 +317,9 @@ function mapEvents() {
         else {
           marker = L.marker([fields[2], fields[3]], {icon: icons['classic']}).addTo(map);
         }
-        marker.bindPopup(`Time: ${fields[1].replace('T', ' ').replace(/\.(\d{2}).*$/, '.$1')}<br>
-          Depth (km): ${parseFloat(fields[4]).toFixed(2)}<br>Magnitude: ${parseFloat(fields[10]).toFixed(2)}`);
+        marker.bindPopup(`Or. Time [GMT]: ${fields[1].replace('T', ' ').replace(/\.(\d{2}).*$/, '.$1')}<br>
+          Magnitude: ${parseFloat(fields[10]).toFixed(2)}<br>Latitude [°N]: ${parseFloat(fields[2]).toFixed(4)}<br>
+          Longtitude [°E]: ${parseFloat(fields[3]).toFixed(4)}<br>Focal Depth [km]: ${parseFloat(fields[4]).toFixed(2)}`);
       }
     }
   })
